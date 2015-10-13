@@ -206,7 +206,7 @@ def lvcreate(vgname, lvname, size):
     if vg[0]['free'] < size:
         raise errors.NotEnoughSpaceError(
             'Error while creating lv: vg %s has only %s m of free space, '
-            'but at least %s m is needed' % (vgname, vg[0]['free'], size))
+            'but at least %s m is needed %s %s' % (vgname, vg[0]['free'], size, type(vg[0]['free']), type(size)))
     # check if lv already exists
     if filter(lambda x: x['name'] == lvname and x['vg'] == vgname,
               lvdisplay()):

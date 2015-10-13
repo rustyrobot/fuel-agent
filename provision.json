@@ -1,0 +1,60 @@
+{
+  "partitioning": {
+    "parteds": [
+      {
+        "partitions": [
+          {
+            "count": 1,
+            "begin": 1,
+            "end": 20000,
+            "name": "/dev/vdc1",
+            "device": "/dev/vdc",
+            "flags": [
+              "bios_grub"
+            ],
+            "guid": null,
+            "configdrive": false,
+            "partition_type": "primary"
+          }
+        ],
+        "name": "/dev/vdc",
+        "label": "gpt"
+      }
+    ],
+    "pvs": [
+      {
+        "metadatacopies": 2,
+        "metadatasize": 28,
+        "name": "/dev/vdc1"
+      }
+    ],
+    "vgs": [
+      {
+        "name": "kurnik",
+        "pvnames": [
+        "/dev/vdc1"
+        ]
+      }
+    ],
+    "lvs": [
+      {
+        "name": "kura",
+        "size": 69,
+        "vgname": "kurnik"
+      },
+      {
+        "name": "kogut",
+        "size": 96,
+        "vgname": "kurnik"
+      }
+    ],
+    "fss": [
+      {
+        "device": "/dev/kurnik/kogut",
+        "fs_label": "kogut",
+        "fs_type": "ext2",
+        "mount": "/tmp/kogutek"
+      }
+    ]
+  }
+}
