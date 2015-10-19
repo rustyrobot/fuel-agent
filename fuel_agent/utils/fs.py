@@ -31,6 +31,7 @@ def make_fs(fs_type, fs_options, fs_label, dev):
         # Othwerwise, it will fail to proceed if filesystem exists.
         fs_options += ' -f '
     cmd_line.append(cmd_name)
+    fs_label = '-L ' + fs_label
     for opt in (fs_options, fs_label):
         cmd_line.extend([s for s in opt.split(' ') if s])
     cmd_line.append(dev)
