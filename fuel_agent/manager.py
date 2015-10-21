@@ -249,8 +249,6 @@ class Manager(object):
             if not found_images:
                 fu.make_fs(fs.type, fs.options, fs.label, fs.device)
 
-        self.do_get_fstab()
-
     def do_configdrive(self):
         LOG.debug('--- Creating configdrive (do_configdrive) ---')
         cc_output_path = os.path.join(CONF.tmp_path, 'cloud_config.txt')
@@ -393,7 +391,7 @@ class Manager(object):
                 continue
             fu.umount_fs(chroot + fs.mount)
 
-    def do_get_fstab(self):
+    def do_fstab_config(self):
 
         def get_device_uuid(device):
             return utils.execute(
@@ -401,20 +399,22 @@ class Manager(object):
                 check_exit_code=[0])
             [0].strip()
 
-            for fs in self.driver.partition_scheme.fss:
-                uuid = get_device_uuid(fs.device)
-                options = (
-                    "defaults",
-                )
-                if fs.mount == '/':
-                    options.append('errors=panic')
+        fstab = ""
+        for fs in self.driver.partition_scheme.fss:
+            uuid = get_device_uuid(fs.device)
+            options = (
+                "defaults",
+            )
+            if fs.mount == '/':
+                options.append('errors=panic')
 
-                print("UUID={uuid} {mount} {type} {options} 0 0".format(
-                    uuid=uuid,
-                    mount=fs.mount,
-                    type=fs.type,
-                    options=','.join(options)
-                ))
+            fstab += "UUID={uuid} {mount} {type} {options} 0 0\n".format(
+                uuid=uuid,
+                mount=fs.mount,
+                type=fs.type,
+                options=','.join(options)
+            )
+        print(fstab)
 
     def do_bootloader(self):
         LOG.debug('--- Installing bootloader (do_bootloader) ---')

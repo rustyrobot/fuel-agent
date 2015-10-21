@@ -63,6 +63,10 @@ def build_image():
     main(['do_build_image'])
 
 
+def fstab_config():
+    main(['do_fstab_config'])
+
+
 def print_err(line):
     sys.stderr.write(six.text_type(line))
     sys.stderr.write('\n')
